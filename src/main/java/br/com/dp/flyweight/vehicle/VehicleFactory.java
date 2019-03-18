@@ -14,9 +14,13 @@ public class VehicleFactory {
 	private static Map<ColorEnum, Vehicle> vehiclesCache = new EnumMap<>(ColorEnum.class);
 
 	public static Vehicle createVehicle(ColorEnum color) {
-		return vehiclesCache.computeIfAbsent(color, newColor -> {
+		long startTimeLocalNS = System.nanoTime();
+		Vehicle vei = vehiclesCache.computeIfAbsent(color, newColor -> {
 			System.out.println("creating new veicle for color: " + color);
 			return new Car(newColor);
 		});
+		long endTimeLocalNS = System.nanoTime();
+		System.out.println("total duration time: "+ (endTimeLocalNS - startTimeLocalNS));
+		return vei;
 	}
 }
